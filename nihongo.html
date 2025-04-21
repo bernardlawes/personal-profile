@@ -151,19 +151,19 @@
 
 
 
-<!-- Dark Mode Toggle -->
-<div class="absolute top-0 left-0 z-50 ">
-  <button id="themeToggle" class="bg-gray-500 dark:bg-gray-700 text-gray-800 dark:text-white px-2 py-1 text-sm shadow transition bg-opacity-50 p-6 rounded" >
-    🌙 <span style="color:white">Dark Mode</span>
-  </button>
-</div>
+<!-- Fixed top container aligned with right edge of content area -->
+<div class="fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none">
+  <div class="w-full max-w-6xl flex justify-end space-x-2 p-2 pointer-events-auto">
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="bg-gray-500 dark:bg-gray-700 text-white px-3 py-1 h-8 text-sm shadow transition bg-opacity-50 rounded">
+      🌙 <span>Dark Mode</span>
+    </button>
 
-<!-- Dark Mode Toggle -->
-<div class="absolute top-0 right-0 z-50 ">
-  <button id="languageToggle" class="bg-gray-500 dark:bg-gray-700 text-gray-800 dark:text-white px-2 py-0 text-sm shadow transition bg-opacity-50 rounded" onclick="window.location.href='english.html'">
-    <img src="images/us.png" alt="USA Flag" class="w-6 h-6 inline-block"> 
-    <!--<span style="color:white">日本語</span>-->
-  </button>
+    <!-- Language Toggle -->
+    <button id="languageToggle" onclick="window.location.href='english.html'" class="bg-gray-500 dark:bg-gray-700 text-white px-3 py-1 h-8 text-sm shadow transition bg-opacity-50 rounded">
+      <img src="images/us.png" alt="USA Flag" class="w-5 h-5 inline-block align-middle">
+    </button>
+  </div>
 </div>
 
 
@@ -445,23 +445,59 @@
   });
   if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
 
-  // GitHub Feed
-  const githubUser = "bernardlawes"; // Replace with your GitHub username
-  fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=7`)
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("githubFeed");
-      data.forEach(repo => {
-        if (repo.name == "bernardlawes") return; // Skip forks
-        container.innerHTML += `
-          <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
-            <h3 class="text-lg font-semibold mb-1">
-              <a href="${repo.html_url}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">${repo.name}</a>
-            </h3>
-            <p class="text-sm">${repo.description || "No description provided."}</p>
-          </div>`;
-      });
+// GitHub Feed
+const githubUser = "bernardlawes";
+const token = "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"; // Replace with your token
+
+fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=17`, {
+  headers: {
+    Authorization: `token ${token}`
+  }
+})
+  .then(res => res.json())
+  .then(data => {
+    if (!Array.isArray(data)) {
+      console.error("GitHub API error:", data);
+      return;
+    }
+
+    const container = document.getElementById("githubFeed");
+    data.forEach(repo => {
+      if (repo.name === githubUser) return;
+      if (repo.name === "personal-profile") return;
+      if (repo.name.includes("csharp")) return;
+      
+      const repoCard = document.createElement("div");
+      repoCard.className = "bg-white dark:bg-gray-800 p-4 rounded shadow";
+
+      const title = `<h3 class="text-lg font-semibold mb-1">
+        <a href="${repo.html_url}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">${repo.name}</a>
+      </h3>`;
+
+      const description = `<p class="text-sm mb-2">${repo.description || "No description provided."}</p>`;
+
+      repoCard.innerHTML = title + description;
+
+      fetch(repo.languages_url, {
+        headers: {
+          Authorization: `token ${token}`
+        }
+      })
+        .then(langRes => langRes.json())
+        .then(languages => {
+          const langList = Object.keys(languages);
+          if (langList.length > 0) {
+            const langs = langList.map(lang => `<span class='inline-block bg-gray-200 dark:bg-gray-700 text-xs px-2 py-1 rounded mr-1 mb-1'>${lang}</span>`).join(" ");
+            const langWrapper = document.createElement("div");
+            langWrapper.className = "mt-2 flex flex-wrap items-center text-xs text-gray-600 dark:text-gray-300";
+            langWrapper.innerHTML = langs;
+            repoCard.appendChild(langWrapper);
+          }
+        });
+
+      container.appendChild(repoCard);
     });
+  });
 </script>
 
 <script>

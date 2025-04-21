@@ -145,7 +145,7 @@
     <div>
       <h1 class="text-4xl md:text-5xl font-bold mb-3">Bernard Lawes</h1>
       <br/>
-      <p class="text-lg md:text-xl text-gray-300 mb-4">Solutions Architect | Computer Vision | Machine Learning | Edge | IoT</p>
+      <p class="text-lg md:text-xl text-gray-300 mb-4">Bi-Lingual | Computer Vision | Machine Learning | Edge | IoT</p>
       <br/>
       <div class="grid md:grid-cols-3 gap-8">
         <a href="https://linkedin.com/in/lawes" target="_blank" class="bg-blue-600 hover:bg-blue-500 py-3 px-6 rounded-full transition"><i class="fab fa-linkedin"></i> &nbsp;Linkedin</a>
@@ -157,20 +157,21 @@
   </div>
 </section>
 
-<!-- Dark Mode Toggle -->
-<div class="absolute top-0 left-0 z-50 ">
-  <button id="themeToggle" class="bg-gray-500 dark:bg-gray-700 text-gray-800 dark:text-white px-2 py-1 text-sm shadow transition bg-opacity-50 p-6 rounded">
-    🌙 <span style="color:white">Dark Mode</span>
-  </button>
+<!-- Fixed top container aligned with right edge of content area -->
+<div class="fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none">
+  <div class="w-full max-w-6xl flex justify-end space-x-2 p-2 pointer-events-auto">
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="bg-gray-500 dark:bg-gray-700 text-white px-3 py-1 h-8 text-sm shadow transition bg-opacity-50 rounded">
+      🌙 <span>Dark Mode</span>
+    </button>
+
+    <!-- Language Toggle -->
+    <button id="languageToggle" onclick="window.location.href='nihongo.html'" class="bg-gray-500 dark:bg-gray-700 text-white px-3 py-1 h-8 text-sm shadow transition bg-opacity-50 rounded">
+      <img src="images/jp.png" alt="Japan Flag" class="w-5 h-5 inline-block align-middle">
+    </button>
+  </div>
 </div>
 
-<!-- Dark Mode Toggle -->
-<div class="absolute top-0 right-0 z-50 ">
-  <button id="languageToggle" class="bg-gray-500 dark:bg-gray-700 text-gray-800 dark:text-white px-2 py-0 text-sm shadow transition bg-opacity-50 rounded" onclick="window.location.href='nihongo.html'">
-    <img src="images/jp.png" alt="Japanese Flag" class="w-6 h-6 inline-block"> 
-    <!--<span style="color:white">日本語</span>-->
-  </button>
-</div>
 
 
 <section class="py-20 px-6 bg-gray-100 dark:bg-gray-900">
@@ -178,10 +179,10 @@
     
     <!-- Left Container -->
     <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow flex flex-col justify-between text-center">
-      <h3 class="text-2xl font-semibold mb-4">Download Resume</h3>
+      <h3 class="text-2xl font-semibold mb-4">Request Resume</h3>
       <p class="mb-6 text-gray-600 dark:text-gray-300">Are you a recruiter, or ready to collaborate on a new idea? </p>
       <button id="themeToggle" class="bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-full transition">
-        Download Resume
+        Request
       </button>
     </div>
 
@@ -459,22 +460,58 @@
   if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
 
   // GitHub Feed
-  const githubUser = "bernardlawes"; // Replace with your GitHub username
-  fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=7`)
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("githubFeed");
-      data.forEach(repo => {
-        if (repo.name == "bernardlawes") return; // Skip forks
-        container.innerHTML += `
-          <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
-            <h3 class="text-lg font-semibold mb-1">
-              <a href="${repo.html_url}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">${repo.name}</a>
-            </h3>
-            <p class="text-sm">${repo.description || "No description provided."}</p>
-          </div>`;
-      });
+const githubUser = "bernardlawes";
+const token = "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"; // Replace with your token
+
+fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=17`, {
+  headers: {
+    Authorization: `token ${token}`
+  }
+})
+  .then(res => res.json())
+  .then(data => {
+    if (!Array.isArray(data)) {
+      console.error("GitHub API error:", data);
+      return;
+    }
+
+    const container = document.getElementById("githubFeed");
+    data.forEach(repo => {
+      if (repo.name === githubUser) return;
+      if (repo.name === "personal-profile") return;
+      if (repo.name.includes("csharp")) return;
+
+      const repoCard = document.createElement("div");
+      repoCard.className = "bg-white dark:bg-gray-800 p-4 rounded shadow";
+
+      const title = `<h3 class="text-lg font-semibold mb-1">
+        <a href="${repo.html_url}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">${repo.name}</a>
+      </h3>`;
+
+      const description = `<p class="text-sm mb-2">${repo.description || "No description provided."}</p>`;
+
+      repoCard.innerHTML = title + description;
+
+      fetch(repo.languages_url, {
+        headers: {
+          Authorization: `token ${token}`
+        }
+      })
+        .then(langRes => langRes.json())
+        .then(languages => {
+          const langList = Object.keys(languages);
+          if (langList.length > 0) {
+            const langs = langList.map(lang => `<span class='inline-block bg-gray-200 dark:bg-gray-700 text-xs px-2 py-1 rounded mr-1 mb-1'>${lang}</span>`).join(" ");
+            const langWrapper = document.createElement("div");
+            langWrapper.className = "mt-2 flex flex-wrap items-center text-xs text-gray-600 dark:text-gray-300";
+            langWrapper.innerHTML = langs;
+            repoCard.appendChild(langWrapper);
+          }
+        });
+
+      container.appendChild(repoCard);
     });
+  });
 </script>
 
 <script>

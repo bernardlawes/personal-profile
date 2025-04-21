@@ -56,6 +56,8 @@
       flex-direction: column;
     }
 
+
+
     .left img, .right img {
       width: 50px;
       height: 50px;
@@ -68,7 +70,7 @@
     }
 
     .right {
-      background-color: #87afc7;
+      background-color: #fff;
       color: #1f2937;
     }
 
@@ -77,14 +79,96 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 5;
+      z-index: 2;
       text-align: center;
-      width: 100%;
+      width: 90%;
       max-width: 1000px;
       padding: 2rem 2rem;
+      background-color: rgba(0, 0, 0, 0.0);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;      /* centers vertically */
+      overflow: hidden; /* hides overflow */
       
       
     }
+
+    .overlay-text {
+      z-index: 3;
+    }
+
+    .overlay-container {
+      position: absolute;
+      display: flex;
+      gap: 0px; /* space between divs */
+      width: 100%;
+      height: 100%;
+      margin: 50px auto;
+      background-color: transparent;
+      background-image: url('images/us.svg'); 
+      background-size: cover;       
+      background-position: center;  
+      background-repeat: no-repeat; 
+   
+    }
+
+    .overlay-box {
+      flex: 1; /* equal width */
+      padding: 20px;
+      border: px solid #1f2937;
+      background-color: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      
+      
+    }
+
+    .overlay-box.overlay-left {
+
+      background-color: rgba(31, 41, 55, 0.7);
+
+      /*
+      background-image: url('images/us.svg'); 
+      background-size: cover;       
+      background-position: center;  
+      background-repeat: no-repeat; 
+      */
+      
+    }
+
+    .overlay-box.overlay-right {
+
+      background-color: #55333d
+
+    }
+
+  .link-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* spacing between links */
+}
+
+.link-container a {
+  
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 20px 20px;
+  border-radius: 6px;
+  border: 0px solid #1f2937;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #1f2937;
+  background-color: rgba(255,255,255, 0.75); 
+  margin-top: 50px;
+}
+
+.link-container a:hover {
+  background-color: rgba(255,255,255, 1);  
+}
 
     .profile-image {
       width: 150px;
@@ -111,8 +195,9 @@
 
     h1 span {
       display: block;
-      font-size: 1.25rem;
-      color: #ccc;
+      font-size: 2rem;
+      margin-top:10px;
+      color: #eee;
     }
 
     a {
@@ -125,16 +210,19 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      
     }
 
     .left a {
       color: #fff;
       border: 2px solid #fff;
+      z-index: 5;
     }
 
     .right a {
       color: #1f2937;
       border: 2px solid #1f2937;
+      z-index: 5;
     }
 
     .left a:hover {
@@ -153,17 +241,18 @@
       display: none;
     }
 
-    @media (max-width: 1400px) {
-      .overlay {
-        top: 25%;
-        transform: translate(-50%, -50%);
-      }
+    .offscreen {
+                position: absolute;
+                left: -9999px;
+                top: -9999px;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                white-space: nowrap;
     }
+
+
     @media (max-width: 768px) {
-      .overlay {
-        top: 25%;
-        transform: translate(-50%, -50%);
-      }
 
       .left img, .right img {
       width: 100px;
@@ -188,6 +277,14 @@
         padding: 10px 20px;
       }
 
+      .link-container a {
+
+        padding: 10px 20px;
+        margin-top: 0px;
+        
+        
+      }
+
       .wideview {
         display: none;
       }
@@ -196,39 +293,61 @@
         display: inline;
       }
     }
+
+    
     @media (max-height: 768px) {
       h1 {
         font-size: 2rem;
       }
       h1 span {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
       }
     }
+
   </style>
 </head>
 <body>
 
+
+
   <!-- Overlay content on top of the split -->
   <div class="overlay">
-    <div class="profile-image">
-      <img src="images/profile.jpg" alt="Profile Picture" />
+    <div class="overlay-container">
+      <div class="overlay-box overlay-left"></div>
+      <div class="overlay-box overlay-right"></div>
     </div>
-    <h1>
-      Bernard Lawes<br />
-      <span>Bi-lingual <span class="wideview">Solutions Architect</span><span class="smallview">Engineer</span></span>
-    </h1>
+    <div class="overlay-text" >
+      <div class="profile-image">
+        <img src="images/profile.jpg" alt="Profile Picture" />
+      </div>
+      <h1>
+        Bernard Lawes<br />
+        <span>Bi-lingual <span class="wideview">Solutions Architect</span><span class="smallview">Engineer</span></span>
+      </h1>
+      <br/><br/>
+      <div class="link-container">
+        <a href="english.html">
+          <span class="wideview">English</span>
+          <img src="images/us.svg" alt="US Flag" style="width: 30px;" />
+        </a>
+        <a href="nihongo.html" >
+          <span class="wideview" style="font-size:.8em">日本語</span>
+          <img src="images/jp.svg" alt="Japanese Flag" style="width: 30px;" />
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- Split background section -->
   <div class="container">
     <div class="left">
-      <a href="nihongo.html">
+      <a href="nihongo.html" class="offscreen">
         <span class="wideview">日本語</span>
         <img src="images/jp.svg" alt="Japanese Flag" />
       </a>
     </div>
     <div class="right">
-      <a href="english.html">
+      <a href="english.html"  class="offscreen">
         <span class="wideview">English</span>
         <img src="images/us.svg" alt="US Flag" />
       </a>
