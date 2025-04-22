@@ -16,6 +16,9 @@ function getMinutesOldFromLogLine(string $line): ?int {
 }
 
 
+
+
+
 $maxAge = 1; // in minutes
 $logFile = 'logs/email.log';
 
