@@ -207,7 +207,7 @@
             type="button"
             class="px-6 py-3 bg-blue-500 hover:bg-blue-300 text-white rounded-md transition w-full offscreen" 
             
-            data-token="20250422094027"
+            data-token=""
             data-purpose="some purpose"
             data-target="example.txt"
           >
