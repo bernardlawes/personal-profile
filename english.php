@@ -1,3 +1,15 @@
+<?php
+    // Read the file contents
+    $json = file_get_contents('config-ps.json');
+
+    // Decode the JSON to an associative array
+    $config = json_decode($json, true);
+
+    // Access the value
+    $token_githubfeed = $config['github_token'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -24,6 +36,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bernard Lawes | Solutions Architect</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
     tailwind.config = {
       darkMode: 'class'
@@ -43,6 +56,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
     /* Modal Styles */
     .modal {
         display: none;
@@ -127,29 +141,33 @@
 </head>
 
   
-<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300 ">
+
+
+
+
+
+
 
 <!-- Hero -->
 <section class="relative bg-gray-900 text-white py-24 px-6 text-center bg-cover bg-center" style="background-image: url('images/map.jpg');">
   <div class="absolute inset-0 bg-black opacity-70"></div>
   <div class="relative max-w-4xl mx-auto flex flex-col items-center md:flex-row md:justify-center" data-aos="fade-up">
-    <img src="images/profile.jpg" alt="Bernard Lawes" class="w-60 h-60 rounded-full mb-6 md:mb-0 md:mr-8 border-4 border-white shadow-lg"  onclick="window.location.href='index.html'"/>
+    <img src="images/profile.jpg" alt="Bernard Lawes" class="w-60 h-60 rounded-full mb-6 md:mb-0 md:mr-8 border-4 border-white shadow-lg" onclick="window.location.href='index.html'"/>
     <div>
       <h1 class="text-4xl md:text-5xl font-bold mb-3">Bernard Lawes</h1>
       <br/>
-      <p class="text-lg md:text-xl text-gray-300 mb-4">技術営業エンジニア | 画像解析 | 機械学習 | エッジ | IoT</p>
+      <p class="text-lg md:text-xl text-gray-300 mb-4">Bi-Lingual | Computer Vision | Machine Learning | Edge | IoT</p>
       <br/>
       <div class="grid md:grid-cols-3 gap-8">
         <a href="https://linkedin.com/in/lawes" target="_blank" class="bg-blue-600 hover:bg-blue-500 py-3 px-6 rounded-full transition"><i class="fab fa-linkedin"></i> &nbsp;Linkedin</a>
         <a href="https://github.com/bernardlawes" target="_blank" class="bg-blue-600 hover:bg-blue-500 py-3 px-6 rounded-full transition"><i class="fab fa-github"></i> &nbsp;GitHub</a>
-        <a href="#projects" class="bg-blue-600 hover:bg-blue-500 py-3 px-6 rounded-full transition"><i class="fas fa-image"></i> &nbsp;実績集</a>
-        <!--<a href="resume.pdf" download class="bg-white text-gray-900 hover:bg-gray-200 py-3 px-6 rounded-full transition"><i class="fas fa-file-alt"></i> &nbsp;Resume</a>-->
+        <a href="#projects" class="bg-blue-600 hover:bg-blue-500 py-3 px-6 rounded-full transition"><i class="fas fa-image"></i> &nbsp;Portfolio</a>
+        <!--<a href="resume.txt" download class="bg-white text-gray-900 hover:bg-gray-200 py-3 px-6 rounded-full transition"><i class="fas fa-file-alt"></i> &nbsp;Resume</a>-->
       </div>
     </div>
   </div>
 </section>
-
-
 
 <!-- Fixed top container aligned with right edge of content area -->
 <div class="fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none">
@@ -160,11 +178,12 @@
     </button>
 
     <!-- Language Toggle -->
-    <button id="languageToggle" onclick="window.location.href='english.html'" class="bg-gray-500 dark:bg-gray-700 text-white px-3 py-1 h-8 text-sm shadow transition bg-opacity-50 rounded">
-      <img src="images/us.png" alt="USA Flag" class="w-5 h-5 inline-block align-middle">
+    <button id="languageToggle" onclick="window.location.href='nihongo.php'" class="bg-gray-500 dark:bg-gray-700 text-white px-3 py-1 h-8 text-sm shadow transition bg-opacity-50 rounded">
+      <img src="images/jp.png" alt="Japan Flag" class="w-5 h-5 inline-block align-middle">
     </button>
   </div>
 </div>
+
 
 
 <section class="py-20 px-6 bg-gray-100 dark:bg-gray-900">
@@ -172,23 +191,63 @@
     
     <!-- Left Container -->
     <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow flex flex-col justify-between text-center">
-      <h3 class="text-2xl font-semibold mb-4">履歴書をダウンロード</h3>
-      <p class="mb-6 text-gray-600 dark:text-gray-300"> 採用ご担当者様はこちらをクリックして、履歴書をご請求ください。 </p>
-      <button id="themeToggle" class="bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-full transition">
-        ダウンロード
+      <h3 class="text-3xl font-semibold mb-4">Download Resume</h3>
+      <p class="mb-6 text-gray-600 dark:text-gray-300">Are you a recruiter, or ready to collaborate on a new idea? </p>
+      <button id="themeToggle" class="bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-full transition offscreen">
+        Request
       </button>
+      <div >
+        <form id="form_verify_email" class="flex items-center space-x-2 bg-white p-4 rounded-lg" style="background-color:transparent;">
+          <input type="hidden" name="purpose" id="input_purpose" value="downloads" />
+          <input type="hidden" name="target" id="input_target" value="resume.pdf" />
+          <input name="email" id="input_verify_email" required
+            type="text"
+            placeholder="Enter text"
+            class="px-6 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+          />
+          <button
+            id="button_verify_email" 
+            type="submit"
+            class="px-6 py-3 bg-blue-500 hover:bg-blue-300 text-white rounded-md transition" 
+          >
+            Request
+          </button>
+          <a href = '#'
+            id="button_download_document" 
+            type="button"
+            class="px-6 py-3 bg-blue-500 hover:bg-blue-300 text-white rounded-md transition w-full offscreen" 
+            
+            data-token="20250422094027"
+            data-purpose="some purpose"
+            data-target="example.txt"
+          >
+            Download
+          </a>
+        </form>
+        <div class="text-sm text-center" style="margin-bottom:-20px; text-transform:capitalize"  id="response">&nbsp;</div>
+      </div>
+      
     </div>
 
     <!-- Right Container -->
     <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow flex flex-col justify-between text-center">
-      <h3 class="text-2xl font-semibold mb-4">English Profile</h3>
-      <p class="mb-6 text-gray-600 dark:text-gray-300">Click here to view my English Profile</p>
+      <h3 class="text-2xl font-semibold mb-4">日本語のプロフィール</h3>
+      <p class="mb-6 text-gray-600 dark:text-gray-300">こちらをクリックして、日本語のプロフィールをご覧ください。</p>
       <!--
       <button class="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-full transition">
         日本語へ
       </button>
       -->
-      <a href="english.html" class="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-full transition">View Now</a>
+      <div >
+        <form class="flex items-center space-x-2 bg-white p-4 rounded-lg " style="background-color:transparent;">
+          <button
+            type="button"
+            class="px-6 py-3 bg-red-500 hover:bg-blue-300 text-white rounded-md transition w-full" onclick="window.location.href='nihongo.php'"
+          >
+            日本語へ
+          </button>
+        </form>
+      </div>
     </div>
 
   </div>
@@ -198,13 +257,18 @@
 <!-- About Me -->
 <section class="py-16 px-6 bg-white dark:bg-gray-800">
   <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
-    <h2 class="text-3xl font-semibold mb-6 gradient-text">自己紹介</h2><br/>
+    <h2 class="text-3xl font-semibold mb-6 gradient-text">About Me</h2><br/>
     <p class="text-lg leading-relaxed">
-      私は、先進技術を実用的な成果へと結びつけることに情熱を注ぐ、実践的なソリューションアーキテクトです。AI、ビジョンシステム、そしてエンタープライズ向けの導入経験を背景に、価値を重視した技術デモの作成、実環境での機械学習モデルの展開、そして企業のイノベーション促進を専門としています。
+      
+      <!--I’m a hands-on Solutions Architect with a passion for turning advanced tech into practical results. My background spans
+      across AI, vision systems, and enterprise deployments—where I specialize in creating value-driven demonstrations,
+      deploying ML models in real environments, and helping companies accelerate innovation.-->
+      From the streets of Kyoto to the clouds of AWS, I'm a solutions architect who doesn't just pitch innovation — but also build it. 
+      Specializing in AI, computer vision, and geospatial intelligence, I transforms raw data into actionable insight with the precision of an engineer and the storytelling of a seasoned GTM leader.
     </p>
 
     <div class="highlight-box">
-        <p class="highlight-text">"技術そのものが可能性を生み出し、戦略的なストーリーテリングがその可能性をビジネスの価値へと変える"</p>
+        <p class="highlight-text">"Technology alone creates possibilities. Strategic storytelling transforms those possibilities into business value."</p>
       </div>
 
   </div>
@@ -216,38 +280,38 @@
 <!-- Expertise Grid -->
 <section class="py-20 px-6 bg-gray-100 dark:bg-gray-900" id="expertise">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-semibold text-center mb-10 gradient-text">専門分野</h2>
+    <h2 class="text-3xl font-semibold text-center mb-10 gradient-text">Areas of Expertise</h2>
     <br/>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow" data-aos="fade-up">
         <div class="card-icon"><i class="fas fa-eye"></i></div>
-        <h3 class="font-semibold text-xl mb-2">AIビジョンシステム</h3>
-        <p>実世界の画像システムにおける検出・認識・解析機能の強化。</p>
+        <h3 class="font-semibold text-xl mb-2">Computer Vision</h3>
+        <p>Enhancing detection, recognition, and analysis for real-world imaging systems.</p>
       </div>
       <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow" data-aos="fade-up">
         <div class="card-icon"><i class="fas fa-brain"></i></div>
-        <h3 class="font-semibold text-xl mb-2">機械学習</h3>
-        <p>生データをスマートな自動化へと変換する知的モデルの導入。</p>
+        <h3 class="font-semibold text-xl mb-2">Machine Learning</h3>
+        <p>Deploying intelligent models that turn raw data into smart automation.</p>
       </div>
       <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow" data-aos="fade-up">
         <div class="card-icon"><i class="fas fa-network-wired"></i></div>
-        <h3 class="font-semibold text-xl mb-2">エッジ &amp; IoT</h3>
-        <p>知能化された自動化によって、物理世界とデジタル世界をつなぐ。</p>
+        <h3 class="font-semibold text-xl mb-2">Edge &amp; IoT</h3>
+        <p>Connecting the physical and digital world with intelligent automation.</p>
       </div>
       <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow" data-aos="fade-up">
         <div class="card-icon"><i class="fas fa-chart-line"></i></div>
-        <h3 class="font-semibold text-xl mb-2">製品デモンストレーション</h3>
-        <p>意思決定と関心を促す、高インパクトな技術プレゼンテーションの構築</p>
+        <h3 class="font-semibold text-xl mb-2">Strategic Demonstrations</h3>
+        <p>Crafting high-impact technical presentations to drive decisions and interest.</p>
       </div>
       <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow" data-aos="fade-up">
         <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
-        <h3 class="font-semibold text-xl mb-2">概念実証を開発する</h3>
-        <p>アイデアを検証し、新たな可能性を切り拓く迅速なPoC（概念実証）を構築。</p>
+        <h3 class="font-semibold text-xl mb-2">Custom Proof-of-Concepts</h3>
+        <p>Building fast-turnaround POCs that validate ideas and open new possibilities.</p>
       </div>
       <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow" data-aos="fade-up">
         <div class="card-icon"><i class="fas fa-comments"></i></div>
-        <h3 class="font-semibold text-xl mb-2">技術をストーリーとして伝える力</h3>
-        <p>複雑なソリューションを、どんな相手にも伝わる魅力的なストーリーへと翻訳。</p>
+        <h3 class="font-semibold text-xl mb-2">Technical Storytelling</h3>
+        <p>Translating complex solutions into engaging narratives for any audience.</p>
       </div>
     </div>
   </div>
@@ -256,33 +320,34 @@
 <!-- Projects -->
 <section class="py-20 px-6 bg-white dark:bg-gray-800" id="projects">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-semibold text-center mb-10 gradient-text">注目のプロジェクト</h2><br/>
+    <h2 class="text-3xl font-semibold text-center mb-10 gradient-text">Featured Projects</h2><br/>
     <div class="grid md:grid-cols-3 gap-8">
       <div class="bg-gray-100 dark:bg-gray-900 rounded-lg shadow p-4" data-aos="fade-up">
         <img src="images/project-ship.jpg" alt="Project 1" class="rounded cursor-pointer" onclick="openModal(this)" />
-        <h3 class="text-xl font-bold mt-4">船舶の検出と追跡</h3>
-        <p class="text-gray-700 text-sm">悪天候や海況の厳しい状況下でも船舶を検出可能な、高性能な海洋監視向けリモートセンシングソリューションを開発。 </p>
+        <h3 class="text-xl font-bold mt-4">Ship Detection & Tracking</h3>
+        <p class="text-gray-700 text-sm">Developed a high-performance remote sensing solution for maritime surveillance, capable of detecting ships in challenging weather and sea states. </p>
         <br/>
-        <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">セグメンテーション</span>
-        <span class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-full">検出</span>
-        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">追跡</span>
+        <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Segmentation</span>
+        <span class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-full">Detection</span>
+        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">Tracking</span>
       </div>
       <div class="bg-gray-100 dark:bg-gray-900 rounded-lg shadow p-4" data-aos="fade-up" data-aos-delay="100">
         <img src="images/project-fire.jpg" alt="Project 2" class="rounded cursor-pointer" onclick="openModal(this)" />
-        <h3 class="text-xl font-bold mt-4">火災のリアルタイム検出</h3>
-        <p class="text-gray-700 text-sm">衛星および航空データから、火災の発生を検出し、焼失範囲を明確化し、煙を除去した画像を生成するソフトウェアソリューションを開発。 </p>
+        <h3 class="text-xl font-bold mt-4">Active Fire Detection</h3>
+        <p class="text-gray-700 text-sm">Developed a software solution to detect active flames, delineate burn perimeters, and generate smoke-filtered imagery from satellite and airborne data. </p>
         <br/>
-        <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">画像解析</span>
-        <span class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-full">航空機</span>
+        <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Segmentation</span>
+        <span class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-full">Detection</span>
+        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">Tracking</span>
       </div>
       <div class="bg-gray-100 dark:bg-gray-900 rounded-lg shadow p-4" data-aos="fade-up" data-aos-delay="200">
         <img src="images/project-palm.jpg" alt="Project 3" class="rounded cursor-pointer" onclick="openModal(this)" />
-        <h3 class="text-xl font-bold mt-4">農業モニタリング</h3>
-        <p class="text-gray-700 text-sm">樹幹の識別、スペクトルプロファイリング、栄養分析、病害診断のために、ハイパースペクトル画像データを処理するソフトウェアを開発。</p>
+        <h3 class="text-xl font-bold mt-4">Agricultural Monitoring</h3>
+        <p class="text-gray-700 text-sm">Developed software to process multispectral and hyperspectral image data for tree stem identification, spectral profiling, nutrient analysis, and disease diagnoses</p>
         <br/>
-        <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">ハイパースペクトル</span>
-        <span class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-full">画像解析</span>
-        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">ドローンズ</span>
+        <span class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Segmentation</span>
+        <span class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-full">Detection</span>
+        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">Tracking</span>
       </div>
     </div>
     
@@ -329,7 +394,7 @@
 <!-- GitHub Feed -->
 <section class="py-20 px-6 bg-gray-100 dark:bg-gray-900">
   <div class="max-w-5xl mx-auto text-center" data-aos="fade-up">
-    <h2 class="text-2xl font-semibold mb-6 gradient-text">公開GitHubリポジトリ</h2><br/>
+    <h2 class="text-2xl font-semibold mb-6 gradient-text">Public GitHub Repositories</h2><br/>
     <div id="githubFeed" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left"></div>
   </div>
 </section>
@@ -337,9 +402,9 @@
 <!-- Testimonial -->
 <section class="py-20 px-6 bg-white dark:bg-gray-800">
   <div class="max-w-3xl mx-auto text-center" data-aos="zoom-in">
-    <h2 class="text-2xl font-semibold mb-6 gradient-text">推薦の言葉</h2><br/>
+    <h2 class="text-2xl font-semibold mb-6 gradient-text">What People Say</h2><br/>
     <blockquote class="italic text-xl leading-relaxed">
-      “バーナードは、ビジネスにも精通した稀有なエンジニアです。彼のデモは単に技術を見せるだけでなく、商談を成立させるストーリーを語ります。”
+      “Bernard is the rare engineer who speaks fluent business. His demos don’t just show tech—they tell a story that closes deals.”
     </blockquote>
     <p class="mt-4 font-medium">– VP of Sales, AI Startup</p>
   </div>
@@ -348,9 +413,9 @@
 <!-- Contact -->
 <section class="py-20 px-6 bg-gray-900 text-white" id="contact">
   <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
-    <h2 class="text-3xl font-semibold mb-6">ご連絡お待ちしております</h2>
+    <h2 class="text-3xl font-semibold mb-6">Let’s Connect</h2>
     <p class="text-lg text-gray-300 mb-6">
-      新しいアイデアのご相談やコラボレーションをご希望ですか？ぜひお気軽にご連絡ください。.
+      Ready to collaborate or explore a new idea? Reach out and let’s talk.
     </p>
     <p class="text-xl font-medium mb-2 offscreen">
       <a href="mailto:donisleno@gmail.com" class="hover:underline">donisleno@gmail.com</a>
@@ -375,7 +440,7 @@
             placeholder=" " />
           <label for="name"
             class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-6">
-            お名前</label>
+            Your Name</label>
         </div>
       
         <div class="relative z-0 w-full group">
@@ -384,7 +449,7 @@
             placeholder=" " />
           <label for="email"
             class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-6">
-            メールアドレス</label>
+            Email Address</label>
         </div>
       
         <div class="relative z-0 w-full group">
@@ -393,7 +458,7 @@
             placeholder=" "></textarea>
           <label for="message"
             class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-6">
-            メッセージ</label>
+            Your Message</label>
         </div>
       
         <div class="text-center pt-4">
@@ -445,9 +510,14 @@
   });
   if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
 
-// GitHub Feed
+  // GitHub Feed
+
+
+
+
 const githubUser = "bernardlawes";
-const token = "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"; // Replace with your token
+//const token = ""; // Replace with your token
+const token = <?php echo json_encode($token_githubfeed); ?>;
 
 fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=17`, {
   headers: {
@@ -466,7 +536,7 @@ fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=17
       if (repo.name === githubUser) return;
       if (repo.name === "personal-profile") return;
       if (repo.name.includes("csharp")) return;
-      
+
       const repoCard = document.createElement("div");
       repoCard.className = "bg-white dark:bg-gray-800 p-4 rounded shadow";
 
@@ -566,7 +636,7 @@ fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=17
       if (e.target === successModal) closeModalMessage();
     });
   </script>
-
+  <script src="assets/js/scripts.js"></script>
 
 </body>
 </html>
