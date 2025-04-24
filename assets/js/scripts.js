@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         responseDiv.innerHTML = `
           <div class="${data.success && (data.message == "verified" || data.message == "validated" || data.message == "approved")  ? 'text-green-600' : 'text-red-600'}">
-            ${data.message == "verified" ? 'Email verified!' : data.message}
+            ${data.message == "verified" || data.message == "validated" || data.message == "approved"  ? 'Email verified!' : data.message}
           </div>
         `;
         if (data.success && (data.message == "verified" || data.message == "validated" || data.message == "approved")) {
@@ -135,6 +135,19 @@ document.getElementById('button_download_document').addEventListener('click', fu
       element.style.removeProperty('overflow');
       element.style.removeProperty('transition');
     }, duration);
+  }
+
+  function animateAndNavigate(e, url) {
+    e.preventDefault(); // Stop default link behavior
+
+    const overlay = document.getElementById('anim');
+    overlay.classList.remove('translate-x-full');
+    overlay.classList.add('translate-x-0');
+
+    // Wait for animation to finish (match duration-500)
+    setTimeout(() => {
+      window.location.href = url;
+    }, 5000);
   }
 
 

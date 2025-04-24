@@ -1,23 +1,25 @@
 <?php
 
-// Read the file contents
-$json = file_get_contents('config-ps.json');
-
-// Decode the JSON to an associative array
-$config = json_decode($json, true);
-
-// Access the value
-$apitoken = $config['hunterio_token'];
-
 header('Content-Type: application/json; charset=utf-8');
 
+// Verified if confirmed through API
+// Validated if just checked for format and domain
+// Approved if Gmail/Yahoo and bypassed
 
 $bypass_verification = true; // Set to true to skip verification for testing purposes
 $bypass_gmail_yahoo = false; // Set to true to skip Gmail/Yahoo check for testing purposes
 
+if (!$bypass_verification){
+    // Read the file contents
+    $json = file_get_contents('credentials.json');
+    // Decode the JSON to an associative array
+    $config = json_decode($json, true);
+    // Access the value
+    $apiKey = $config['hunterio_token'];
+}
 
 // === Config ===
-$apiKey  = $apitoken;
+
 $logFile = 'logs/email.log';
 
 // === Get and sanitize input ===

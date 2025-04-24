@@ -48,5 +48,6 @@ coverage/
 phpunit.xml.cache
 images/
 downloads/
-config-ps.json
-
+private/
+credentials.json
+error_log
