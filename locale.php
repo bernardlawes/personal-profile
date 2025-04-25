@@ -8,8 +8,8 @@ $payload = [
             'jp' => "自己紹介",
         ],
         'text' => [
-            'en' => "From the streets of Kyoto to the clouds of AWS, I don't just pitch innovation — I also build it. Specializing in AI, computer vision, and geospatial intelligence, 
-                    I transform raw data into actionable insight with the precision of an engineer and the storytelling of a seasoned GTM leader. As a Solutions Architect, I don’t 
+            'en' => "From the streets of Kyoto to the clouds of AWS, I don't just pitch innovation — I also build it. I leverage machine learning, computer vision, and geospatial intelligence to
+                    transform raw data into actionable insight with the precision of an engineer and the storytelling of a seasoned GTM leader. As a Solutions Architect, I don’t 
                     just connect systems — I connect the dots between vision, value, and velocity.",
             'jp' => "京都の街からAWSの雲まで、私は革新を提案するだけでなく、それを構築します。AI、コンピュータビジョン、地理空間インテリジェンスを専門とし、 
                     生データをエンジニアの精度と熟練したGTMリーダーのストーリーテリングで実行可能な洞察に変換します。ソリューションアーキテクトとして、 

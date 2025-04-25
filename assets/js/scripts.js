@@ -1,3 +1,7 @@
+//
+// This script handles the form submission for email verification and the download button accessibility
+// It uses the Fetch API to send the form data to the server and handle the response
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('form_verify_email');
     const responseDiv = document.getElementById('response');
@@ -49,6 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+//
+// Download button click event handler - Checks if the download is allowed before proceeding
+// It uses the Fetch API to send the form data to the server and handle the response
+
 document.getElementById('button_download_document').addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -99,56 +107,69 @@ document.getElementById('button_download_document').addEventListener('click', fu
 
   });
 
-  function slideUp(element, duration = 300) {
-    element.style.height = element.scrollHeight + 'px';
-    element.style.overflow = 'hidden';
-    element.offsetHeight; // force reflow
-  
-    element.style.transition = `height ${duration}ms ease`;
-    element.style.height = '0px';
-  
-    setTimeout(() => {
-      element.style.display = 'none';
-      element.style.removeProperty('height');
-      element.style.removeProperty('overflow');
-      element.style.removeProperty('transition');
-    }, duration);
-  }
+// Function to slide up an element
+// It sets the height to the scrollHeight, then animates it to 0px
+// It also sets the overflow to hidden and removes the transition properties after the animation
 
-  function slideDown(element, duration = 300) {
-    element.style.removeProperty('display'); // reset display if it was none
-  
-    let display = window.getComputedStyle(element).display;
-    if (display === 'none') element.style.display = 'block';
-  
-    let height = element.scrollHeight + 'px';
-  
-    element.style.overflow = 'hidden';
-    element.style.height = '0px';
-    element.offsetHeight; // force reflow
-  
-    element.style.transition = `height ${duration}ms ease`;
-    element.style.height = height;
-  
-    setTimeout(() => {
-      element.style.removeProperty('height');
-      element.style.removeProperty('overflow');
-      element.style.removeProperty('transition');
-    }, duration);
-  }
+function slideUp(element, duration = 300) {
+  element.style.height = element.scrollHeight + 'px';
+  element.style.overflow = 'hidden';
+  element.offsetHeight; // force reflow
 
-  function animateAndNavigate(e, url) {
-    e.preventDefault(); // Stop default link behavior
+  element.style.transition = `height ${duration}ms ease`;
+  element.style.height = '0px';
 
-    const overlay = document.getElementById('anim');
-    overlay.classList.remove('translate-x-full');
-    overlay.classList.add('translate-x-0');
+  setTimeout(() => {
+    element.style.display = 'none';
+    element.style.removeProperty('height');
+    element.style.removeProperty('overflow');
+    element.style.removeProperty('transition');
+  }, duration);
+}
 
-    // Wait for animation to finish (match duration-500)
-    setTimeout(() => {
-      window.location.href = url;
-    }, 5000);
-  }
+// Function to slide down an element
+// It sets the display to block, then animates the height from 0px to the scrollHeight
+// It also resets the overflow and transition properties after the animation
+
+function slideDown(element, duration = 300) {
+  element.style.removeProperty('display'); // reset display if it was none
+
+  let display = window.getComputedStyle(element).display;
+  if (display === 'none') element.style.display = 'block';
+
+  let height = element.scrollHeight + 'px';
+
+  element.style.overflow = 'hidden';
+  element.style.height = '0px';
+  element.offsetHeight; // force reflow
+
+  element.style.transition = `height ${duration}ms ease`;
+  element.style.height = height;
+
+  setTimeout(() => {
+    element.style.removeProperty('height');
+    element.style.removeProperty('overflow');
+    element.style.removeProperty('transition');
+  }, duration);
+}
+
+// Function to animate the overlay and navigate to a new URL
+// It removes the translate-x-full class and adds the translate-x-0 class to animate the overlay
+// It also sets a timeout to navigate to the new URL after the animation is complete
+// The timeout duration should match the animation duration (500ms in this case)
+
+function animateAndNavigate(e, url) {
+  e.preventDefault(); // Stop default link behavior
+
+  const overlay = document.getElementById('anim');
+  overlay.classList.remove('translate-x-full');
+  overlay.classList.add('translate-x-0');
+
+  // Wait for animation to finish (match duration-500)
+  setTimeout(() => {
+    window.location.href = url;
+  }, 5000);
+}
 
 
 
