@@ -50,107 +50,18 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
     };
   </script>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <style>
-    :root {
-    --primary: #0062cc;
-    --secondary: #2c3e50;
-    --light: #f8f9fa;
-    --dark: #343a40;
-    --accent: #17a2b8;
-        }
-      /*
-    .gradient-text {
-      background: linear-gradient(to right, #3b82f6, #6366f1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    */
-    .gradient-text {
-      background: linear-gradient(to right, #4b5563, #374151, #1f2937); /* gray-600 → gray-700 → gray-900 */
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
 
-    /* Modal Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 100;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.9);
-    }
-    
-    .modal-content {
-        margin: auto;
-        display: block;
-        max-width: 80%;
-        max-height: 80%;
-        margin-top: 5%;
-    }
-    
-    #modalCaption {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-        text-align: center;
-        color: white;
-        padding: 10px 0;
-        height: 150px;
-    }
-    
-    .close-modal {
-        position: absolute;
-        top: 15px;
-        right: 35px;
-        color: #f1f1f1;
-        font-size: 40px;
-        font-weight: bold;
-        transition: 0.3s;
-        cursor: pointer;
-    }
-    
-    .close-modal:hover,
-    .close-modal:focus {
-        color: #bbb;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    .card-icon {
-      font-size: 2rem;
-      color: #3b82f6;
-      margin-bottom: 1rem;
-    }
-    .highlight-box {
-            background-color: var(--secondary);
-            color: white;
-            padding: 40px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 50px 0px 0px 0px;
-    }
-        
-        .highlight-text {
+  <link href="assets/css/profile.css" rel="stylesheet" />
+  <style>
+            .highlight-text {
             font-size: <?php echo ($pagelanguage == 'en') ? '1.8rem' : '1.6rem'; ?>;
             font-weight: 300;
             line-height: 1.4;
             max-width: 800px;
             margin: 0 auto;
     }
-    .offscreen {
-                position: absolute;
-                left: -9999px;
-                top: -9999px;
-                width: 1px;
-                height: 1px;
-                overflow: hidden;
-                white-space: nowrap;
-    }
   </style>
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
@@ -595,113 +506,14 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
   &copy; 2025 Bernard Lawes. All rights reserved.
 </footer>
 
-<!-- Modal for project images -->
-<div id="imageModal" class="modal">
-    <span class="close-modal">&times;</span>
-    <img class="modal-content" id="modalImg">
-    <div id="modalCaption"></div>
-</div>
-
-<!-- Confirmation Modal -->
-<div id="successModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
-    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg text-center max-w-sm w-full">
-      <h3 class="text-xl  mb-4 text-green-600 dark:text-green-400">Message Sent!</h3>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">Thanks for reaching out. I’ll get back to you as soon as I can.</p>
-      <button onclick="closeModalMessage()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full">Close</button>
-    </div>
-  </div>
+<?php include 'module-modal.php'; ?>
 
 <!-- Scripts -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
-
-
-
-  // Dark Mode
-  const toggle = document.getElementById("themeToggle");
-  const html = document.documentElement;
-  toggle.addEventListener("click", () => {
-    html.classList.toggle("dark");
-    localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
-    toggle.innerHTML = html.classList.contains("dark") ? "☀️ Light Mode" : '🌙 <span style="color:white">Dark Mode</span>';
-  });
-  if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
-
-
-
-
-
 </script>
-
-<script>
-
-  // Image modal functionality
-  let modal = document.getElementById('imageModal');
-  let modalImg = document.getElementById('modalImg');
-  let captionText = document.getElementById('modalCaption');
-  let closeBtn = document.getElementsByClassName('close-modal')[0];
-  
-  function openModal(img) {
-      modal.style.display = "block";
-      modalImg.src = img.src;
-      captionText.innerHTML = img.alt;
-  }
-  
-  closeBtn.onclick = function() {
-      modal.style.display = "none";
-  }
-  
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
-
-    const form = document.getElementById("contactForm");
-    const successModal = document.getElementById("successModal");
-  
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-  
-      const formData = new FormData(form);
-      const action = form.action;
-  
-      try {
-        const res = await fetch(action, {
-          method: "POST",
-          body: formData,
-          headers: {
-            Accept: "application/json",
-          },
-        });
-  
-        if (res.ok) {
-          form.reset();
-          openModalMessage();
-        } else {
-          alert("❌ Something went wrong. Please try again.");
-        }
-      } catch (err) {
-        alert("❌ Submission failed. Please check your connection.");
-      }
-    });
-  
-    function openModalMessage() {
-      successModal.classList.remove("hidden");
-    }
-  
-    function closeModalMessage() {
-      successModal.classList.add("hidden");
-    }
-  
-    // Optional: close modal when clicking outside the box
-    window.addEventListener("click", (e) => {
-      if (e.target === successModal) closeModalMessage();
-    });
-  </script>
-  
-  <script src="assets/js/scripts.js"></script>
+<script src="assets/js/scripts.js"></script>
 
 </body>
 </html>

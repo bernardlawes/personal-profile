@@ -1,3 +1,6 @@
+
+
+
 //
 // This script handles the form submission for email verification and the download button accessibility
 // It uses the Fetch API to send the form data to the server and handle the response
@@ -10,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       const formData = new FormData(form);
   
-      fetch('verify_email.php', {
+      fetch('func-verify-email.php', {
         method: 'POST',
         body: formData
       })
@@ -172,6 +175,83 @@ function animateAndNavigate(e, url) {
 }
 
 
+// Function to open the image modal when an image is clicked
+// It sets the modal display to block, sets the image source and alt text, and adds event listeners for closing the modal
+// The modal can be closed by clicking the close button or clicking outside the modal
+// The modal is hidden by setting the display to none and removing the event listeners
+  let modal = document.getElementById('imageModal');
+  let modalImg = document.getElementById('modalImg');
+  let captionText = document.getElementById('modalCaption');
+  let closeBtn = document.getElementsByClassName('close-modal')[0];
+  
+  function openModal(img) {
+      modal.style.display = "block";
+      modalImg.src = img.src;
+      captionText.innerHTML = img.alt;
+  }
+  
+  closeBtn.onclick = function() {
+      modal.style.display = "none";
+  }
+  
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+
+    const form = document.getElementById("contactForm");
+    const successModal = document.getElementById("successModal");
+  
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+  
+      const formData = new FormData(form);
+      const action = form.action;
+  
+      try {
+        const res = await fetch(action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+  
+        if (res.ok) {
+          form.reset();
+          openModalMessage();
+        } else {
+          alert("❌ Something went wrong. Please try again.");
+        }
+      } catch (err) {
+        alert("❌ Submission failed. Please check your connection.");
+      }
+    });
+  
+    // Close modal when clicking the close button
+    function openModalMessage() {
+      successModal.classList.remove("hidden");
+    }
+  
+    // Close modal when clicking the close button
+    function closeModalMessage() {
+      successModal.classList.add("hidden");
+    }
+  
+    // Optional: close modal when clicking outside the box
+    window.addEventListener("click", (e) => {
+      if (e.target === successModal) closeModalMessage();
+    });
 
 
-
+// This function handles the theme toggle button
+// Toggles the dark class on the html element and updates the local storage
+  const toggle = document.getElementById("themeToggle");
+  const html = document.documentElement;
+  toggle.addEventListener("click", () => {
+    html.classList.toggle("dark");
+    localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+    toggle.innerHTML = html.classList.contains("dark") ? "☀️ Light Mode" : '🌙 <span style="color:white">Dark Mode</span>';
+  });
+  if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
