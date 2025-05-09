@@ -51,7 +51,7 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
   </script>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 
-  <link href="assets/css/profile.css" rel="stylesheet" />
+  <link href="assets/css/profile.css?v=1" rel="stylesheet" />
   <style>
             .highlight-text {
             font-size: <?php echo ($pagelanguage == 'en') ? '1.8rem' : '1.6rem'; ?>;

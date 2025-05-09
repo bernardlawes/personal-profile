@@ -8,7 +8,7 @@ $payload = [
             'jp' => "自己紹介",
         ],
         'text' => [
-            'en' => "From the streets of Kyoto to the clouds of AWS, I don't just pitch innovation — I also build it. I leverage machine learning, computer vision, and geospatial intelligence to
+            'en' => "From the streets of Kyoto to the clouds of AWS, I don't just pitch innovation — I also build it. Leveraging machine learning, computer vision, and geospatial intelligence, I
                     transform raw data into actionable insight with the precision of an engineer and the storytelling of a seasoned GTM leader. As a Solutions Architect, I don’t 
                     just connect systems — I connect the dots between vision, value, and velocity.",
             'jp' => "京都の街からAWSの雲まで、私は革新を提案するだけでなく、それを構築します。AI、コンピュータビジョン、地理空間インテリジェンスを専門とし、 
@@ -22,7 +22,7 @@ $payload = [
             'jp' => "",
         ],
         'text' => [
-            'en' => '"Technology alone creates possibilities. Strategic storytelling transforms those possibilities into business value."',
+            'en' => '"Technology alone creates possibilities. <span><br/></span> Strategic storytelling transforms those possibilities into business value."',
             'jp' => '"技術そのものが可能性を生み出し、戦略的なストーリーテリングがその可能性をビジネスの価値へと変える"',
         ]
     ],
