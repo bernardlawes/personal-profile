@@ -19,7 +19,7 @@
     }
 
     /* Modal Styles */
-    .modal {
+    .modal-simple {
         display: none;
         position: fixed;
         z-index: 100;
@@ -31,7 +31,7 @@
         background-color: rgba(0,0,0,0.9);
     }
     
-    .modal-content {
+    .modal-content-simple {
         margin: auto;
         display: block;
         max-width: 80%;
@@ -67,6 +67,8 @@
         text-decoration: none;
         cursor: pointer;
     }
+
+
     .card-icon {
       font-size: 2rem;
       color: #3b82f6;
@@ -106,3 +108,46 @@
       }
   
     }
+
+  /*
+  Dynamically truncates text to a maximum number of characters (e.g. 100),
+  Appends an ellipsis (…) only if the text was too long,
+  Works responsively across screen sizes. 
+  */
+
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  /* button to alternate between two styles — say, blue and red backgrounds:*/
+  /* The button will pulse between two colors and change its border radius */
+  /* The animation will alternate between the two styles */
+  /* The button will have a smooth transition effect */
+  /* The button will have a bold font and a cursor pointer */
+  /* The button will have padding and no border */
+  /* The button will have a background color of blue by default */
+
+  .animated-button {
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    animation: pulse-style 2s infinite alternate;
+  }
+
+  @keyframes pulse-style {
+    0% {
+      background-color: #3b82F6;
+      transform: scale(1);
+      /*border-radius: 5px;*/
+    }
+    100% {
+      background-color: #2C3E50;
+      transform: scale(1.1);
+      /*border-radius: 20px;*/
+    }
+  }

@@ -8,10 +8,15 @@ $payload = [
             'jp' => "自己紹介",
         ],
         'text' => [
-            'en' => "From the streets of Kyoto to the clouds of AWS, I don't just pitch innovation — I also build it. Leveraging machine learning, computer vision, and geospatial intelligence, I
-                    transform raw data into actionable insight with the precision of an engineer and the storytelling of a seasoned GTM leader. As a Solutions Architect, I don’t 
+            'en' => "From the streets of Kyoto to the clouds of AWS, I don't just pitch innovation — I also build it. 
+            
+                    <br/><br/>Blending machine learning, computer vision, and geospatial intelligence, 
+                    I transform raw data into actionable insight.  With the precision of an engineer and the storytelling of a seasoned GTM leader - I build solutions that drive value. 
+                    
+                    <br/><br/>As a Solutions Architect, I don’t 
                     just connect systems — I connect the dots between vision, value, and velocity.",
-            'jp' => "京都の街からAWSの雲まで、私は革新を提案するだけでなく、それを構築します。AI、コンピュータビジョン、地理空間インテリジェンスを専門とし、 
+            
+                    'jp' => "京都の街からAWSの雲まで、私は革新を提案するだけでなく、それを構築します。AI、コンピュータビジョン、地理空間インテリジェンスを専門とし、 
                     生データをエンジニアの精度と熟練したGTMリーダーのストーリーテリングで実行可能な洞察に変換します。ソリューションアーキテクトとして、 
                     私はシステムを接続するだけでなく、ビジョン、価値、速度の間の点を接続します。",
         ]
@@ -22,13 +27,13 @@ $payload = [
             'jp' => "",
         ],
         'text' => [
-            'en' => '"Technology alone creates possibilities. <span><br/></span> Strategic storytelling transforms those possibilities into business value."',
+            'en' => '"Technology alone, creates possibilities. <span><br/></span> Strategic storytelling transforms the possible into business value."',
             'jp' => '"技術そのものが可能性を生み出し、戦略的なストーリーテリングがその可能性をビジネスの価値へと変える"',
         ]
     ],
     'download' => [
         'title'=> [
-            'en' => "Download Resume / CV",
+            'en' => "My Resume / CV",
             'jp' => "履歴書をダウンロード",
         ],
         'text' => [
@@ -122,7 +127,7 @@ $payload = [
         'project' => [
             'ship' => [
                 'title'=> [
-                    'en' => "Ship Detection &amp; Tracking",
+                    'en' => "Ship Detection",
                     'jp' => "船舶の検出と追跡",
                 ],
                 'text' => [
@@ -140,7 +145,7 @@ $payload = [
             ],
             'fire' => [
                 'title'=> [
-                    'en' => "Active Fire Detection",
+                    'en' => "Fire Detection",
                     'jp' => "火災のリアルタイム検出",
                 ],
                 'text' => [
@@ -158,7 +163,7 @@ $payload = [
             ],
             'crop' => [
                 'title'=> [
-                    'en' => "Crop Analysis",
+                    'en' => "Crop Analysis - Hyperspectral",
                     'jp' => "農業モニタリング",
                 ],
                 'text' => [

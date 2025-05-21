@@ -34,10 +34,21 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
 <meta name="twitter:description" content="Explore projects and insights from Bernard Lawes, an expert in AI and computer vision solutions." />
 <meta name="twitter:image" content="https://bermardlawes.com/images/profile.jpg" />
 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+<!-- Minimum setup for "PWA - Add to Home Screen": -->
+<!-- Set app title -->
+<meta name="apple-mobile-web-app-title" content="Bernard Lawes">
+<!-- Enable standalone (no browser chrome) -->
+<!--<meta name="apple-mobile-web-app-capable" content="yes"> DEPRECATED -->
+<meta name="mobile-web-app-capable" content="yes">
+<!-- Set the status bar style -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- iPhone icon -->
+<link rel="apple-touch-icon" href="./favicons/apple-touch-icon.png">
+<!-- End PWA Support -->
+
+<link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png">
+<link rel="manifest" href="./manifest.json">
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,6 +63,8 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 
   <link href="assets/css/profile.css?v=1" rel="stylesheet" />
+  <link href="assets/css/modal.css?v=1" rel="stylesheet" />
+  
   <style>
             .highlight-text {
             font-size: <?php echo ($pagelanguage == 'en') ? '1.8rem' : '1.6rem'; ?>;
@@ -159,7 +172,7 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
 
           <input name="email" id="input_verify_email" required
             type="text"
-            placeholder="Enter text"
+            placeholder="Enter your email address"
             class="px-6 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
           />
 
@@ -170,13 +183,13 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
           <a href = '#'
             id="button_download_document" 
             type="button"
-            class="px-6 py-3 bg-blue-500 hover:bg-blue-300 text-white rounded-md transition w-full offscreen" 
+            class="animated-button px-6 py-3 bg-blue-500 hover:bg-blue-300 text-white rounded-md transition w-full offscreen" 
             
             data-token=""
             data-purpose="some purpose"
             data-target="example.txt"
           >
-            Download
+            <span style="font-weight: 100"></span> <span style="font-weight: 100">Click to Download</span>
           </a>
         </form>
         <div class="text-sm text-center" style="margin-bottom:-20px; text-transform:capitalize"  id="response">&nbsp;</div>
@@ -278,14 +291,18 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
   <h2 class="<?php echo ($pagelanguage == 'en') ? 'text-4xl' : 'text-2xl'; ?>  mb-6 text-gray-900 dark:text-white"><i class="fa fa-chevron-circle-right"></i>&nbsp; <?php echo $payload['projects']['title'][$pagelanguage ]; ?></h2>
   <hr class="my-8 border-t-0 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600" />
   <div class="grid md:grid-cols-3 gap-8">
-      <div class="relative group rounded-2xl overflow-hidden shadow-lg transform transition hover:-translate-y-1 hover:shadow-2xl bg-gray-75 dark:bg-gray-900" data-aos="fade-up">
-        <img src="images/project-ship.jpg" alt="Ship Detection" class="w-full h-48 object-cover transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal(this)" />
-
+      <div class="relative group rounded-2xl overflow-hidden shadow-lg transform transition hover:-translate-y-1 hover:shadow-2xl bg-gray-75 dark:bg-gray-900"
+              data-aos="fade-up" 
+              onclick="openProjectModal(this)"
+              data-category="maritime"
+              data-image="./images/project-ship-2.jpg" 
+              data-description="Ship detection and AIS matching system used in coastal monitoring for real-time maritime security.">
+        <img src="images/tanker.jpg" alt="Ship Detection" class="w-full h-48 object-cover transition duration-300 group-hover:scale-105 cursor-pointer" />
         <div class="p-5">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition">
           <?php echo $payload['projects']['project']['ship']['title'][$pagelanguage ]; ?>
           </h3>
-          <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 transition-opacity duration-300 opacity-90 group-hover:opacity-100">
+          <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 transition-opacity duration-300 opacity-90 group-hover:opacity-100 truncate" data-max-chars="100">
           <?php echo $payload['projects']['project']['ship']['text'][$pagelanguage ]; ?>
           </p>
 
@@ -301,14 +318,19 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
           </div>
         </div>
       </div>
-      <div class="relative group rounded-2xl overflow-hidden shadow-lg transform transition hover:-translate-y-1 hover:shadow-2xl bg-gray-75 dark:bg-gray-900" data-aos="fade-up">
-        <img src="images/project-fire.jpg" alt="Active Fire" class="w-full h-48 object-cover transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal(this)" />
+      <div class="relative group rounded-2xl overflow-hidden shadow-lg transform transition hover:-translate-y-1 hover:shadow-2xl bg-gray-75 dark:bg-gray-900"
+              data-aos="fade-up" 
+              onclick="openProjectModal(this)"
+              data-category="maritime"
+              data-image="./images/fire-all.jpg" 
+              data-description="Ship detection and AIS matching system used in coastal monitoring for real-time maritime security.">
+        <img src="images/project-fire.jpg" alt="Active Fire" class="w-full h-48 object-cover transition duration-300 group-hover:scale-105 cursor-pointer" />
 
         <div class="p-5">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition">
           <?php echo $payload['projects']['project']['fire']['title'][$pagelanguage ]; ?>
           </h3>
-          <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 transition-opacity duration-300 opacity-90 group-hover:opacity-100">
+          <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 transition-opacity duration-300 opacity-90 group-hover:opacity-100 truncate" data-max-chars="100">
           <?php echo $payload['projects']['project']['fire']['text'][$pagelanguage ]; ?>
           </p>
 
@@ -323,14 +345,19 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
           </div>
         </div>
       </div>
-      <div class="relative group rounded-2xl overflow-hidden shadow-lg transform transition hover:-translate-y-1 hover:shadow-2xl bg-gray-75 dark:bg-gray-900" data-aos="fade-up">
-        <img src="images/project-palm.jpg" alt="Crop Analysis" class="w-full h-48 object-cover transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal(this)" />
+      <div class="relative group rounded-2xl overflow-hidden shadow-lg transform transition hover:-translate-y-1 hover:shadow-2xl bg-gray-75 dark:bg-gray-900" 
+              data-aos="fade-up" 
+              onclick="openProjectModal(this)"
+              data-category="maritime"
+              data-image="./images/project-palm.jpg" 
+              data-description="Ship detection and AIS matching system used in coastal monitoring for real-time maritime security.">
+        <img src="images/project-palm-cover.jpg" alt="Crop Analysis" class="w-full h-48 object-cover transition duration-300 group-hover:scale-105 cursor-pointer" />
 
         <div class="p-5">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition">
-          <?php echo $payload['projects']['project']['crop']['title'][$pagelanguage ]; ?>
+            <?php echo $payload['projects']['project']['crop']['title'][$pagelanguage ]; ?>
           </h3>
-          <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 transition-opacity duration-300 opacity-90 group-hover:opacity-100">
+          <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 transition-opacity duration-300 opacity-90 group-hover:opacity-100 truncate" data-max-chars="100">
             <?php echo $payload['projects']['project']['crop']['text'][$pagelanguage ]; ?>
           </p>
 
@@ -514,6 +541,7 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
   AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
 </script>
 <script src="assets/js/scripts.js"></script>
+<script src="assets/js/modal.js"></script>
 
 </body>
 </html>

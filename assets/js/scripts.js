@@ -255,3 +255,16 @@ function animateAndNavigate(e, url) {
     toggle.innerHTML = html.classList.contains("dark") ? "☀️ Light Mode" : '🌙 <span style="color:white">Dark Mode</span>';
   });
   if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
+
+
+
+  // Dynamically truncates text to a maximum number of characters (e.g. 100),
+  document.querySelectorAll('.truncate-js').forEach(el => {
+
+    const maxChars = parseInt(el.dataset.maxChars, 10);
+    const fullText = el.innerText.trim();
+  
+    if (fullText.length > maxChars) {
+      el.innerText = fullText.slice(0, maxChars).trimEnd() + '…';
+    }
+  });
