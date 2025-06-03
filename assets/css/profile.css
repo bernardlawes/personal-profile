@@ -139,9 +139,52 @@
     animation: pulse-style 2s infinite alternate;
   }
 
+.cta-button-container {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  flex-wrap: wrap; /* Optional: allows wrapping if space runs out */
+}
+
+.cta-button-container button,  .cta-button-container a{
+  flex: 1;
+  /*margin: 0 30px;*/   /* Increased horizontal spacing between buttons */
+  padding: 10px 0;
+  background-color: var(--secondary);
+  color: white;
+}
+
+.cta-button-container button:hover,  .cta-button-container a:hover{
+  background-color: #142c44; /* Darker shade for hover effect */
+  transition: background-color 0.3s ease;
+}
+
+.cta-button-container button:first-child {
+  margin-left: 0;
+}
+
+.cta-button-container button:last-child {
+  margin-right: 0;
+}
+
+.flag-button {
+  
+  background-repeat: no-repeat;
+  background-position:  10px center;
+  background-size: 40px 100%; /* Adjust width and height */
+}
+
+/* Responsive stacking below 780px */
+@media (max-width: 1179px) {
+  .cta-button-container {
+    flex-direction: column;
+    gap: 16px; /* vertical spacing between stacked buttons */
+  }
+}
+
   @keyframes pulse-style {
     0% {
-      background-color: #3b82F6;
+      background-color: #003385;
       transform: scale(1);
       /*border-radius: 5px;*/
     }

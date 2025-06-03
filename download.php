@@ -1,6 +1,5 @@
 <?php
 
-
 function getMinutesOldFromLogLine(string $line): ?int {
     if (preg_match('/\[(.*?)\]/', $line, $matches)) {
         $timestampStr = $matches[1];
@@ -22,7 +21,7 @@ function getMinutesOldFromLogLine(string $line): ?int {
 $maxAge = 1; // in minutes
 $logFile = 'logs/email.log';
 
-$token = $_GET['token'] ?? 'undefined';
+$inToken = $_GET['token'] ?? 'undefined';
 
 
 //$content = file_get_contents($logFile);
@@ -43,7 +42,7 @@ if ($handle) {
 //Read file into an array (one line per element)
 $lines = file($logFile);
 foreach ($lines as $line) {
-    if (strpos($line, $token) !== false) {
+    if (strpos($line, $inToken) !== false) {
         // Token found in the line
         $parts = explode('|', $line);
         $timestamp = trim($parts[0]);
@@ -56,7 +55,17 @@ foreach ($lines as $line) {
         $target = trim(str_replace("Target:",'',$parts[7]));
         $token = trim(str_replace("Token:",'',$parts[8]));
         break; // Stop searching after finding the first match
+    } else {
+        // Token not found in this line, continue to the next line
+        continue;
     }
+}
+
+if (!isset($timestamp)) {
+    // If any of the required fields are missing, return an error
+    http_response_code(403);
+    echo '⛔ Unrecognized Token.';
+    exit;
 }
 
 
@@ -115,9 +124,10 @@ header('Pragma: public');
 header('Content-Length: ' . filesize($filePath));
 
 
+
 // Clean output buffer and flush before sending file
-ob_clean();
+if (ob_get_level()) {
+    ob_end_clean();
+}
 flush();
 readfile($filePath);
-
-?>

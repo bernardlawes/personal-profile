@@ -33,12 +33,32 @@ $payload = [
     ],
     'download' => [
         'title'=> [
-            'en' => "My Resume / CV",
+            'en' => "Download Resume / Book a Call",
             'jp' => "履歴書をダウンロード",
         ],
         'text' => [
             'en' => "Are you a recruiter, or wanting to collaborate on a new idea?",
             'jp' => "採用ご担当者様はこちらをクリックして、履歴書をご請求ください。",
+        ]
+    ],
+    'cta-0' => [
+        'title'=> [
+            'en' => "<i class='fa fa-file-pdf aria-hidden='true'></i>  &nbsp;Download",
+            'jp' => "ダウンロード",
+        ],
+        'text' => [
+            'en' => "",
+            'jp' => "",
+        ]
+    ],
+    'cta-1' => [
+        'title'=> [
+            'en' => "<i class='fa fa-calendar' aria-hidden='true'></i>  &nbsp;Calendar",
+            'jp' => "カレンダー",
+        ],
+        'text' => [
+            'en' => "",
+            'jp' => "",
         ]
     ],
     'language' => [

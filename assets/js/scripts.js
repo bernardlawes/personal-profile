@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         responseDiv.innerHTML = `
           <div class="${data.success && (data.message == "verified" || data.message == "validated" || data.message == "approved")  ? 'text-green-600' : 'text-red-600'}">
-            ${data.message == "verified" || data.message == "validated" || data.message == "approved"  ? 'Email verified!' : data.message}
+            ${data.message == "verified" || data.message == "validated" || data.message == "approved"  ? 'Thank you, Email verified!' : data.message}
           </div>
         `;
         if (data.success && (data.message == "verified" || data.message == "validated" || data.message == "approved")) {
@@ -31,12 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
             elem.classList.add('offscreen');
             //slideUp(elem,300);
             elem.sli
-            var elem = document.getElementById('button_verify_email');
-            elem.classList.add('offscreen');
+            //var elem = document.getElementById('button_verify_email');
+            //elem.classList.add('offscreen');
             //slideUp(elem,300);
-            var elem = document.getElementById('button_download_document');
+            var elem = document.getElementById('div_download_approved');
             elem.classList.remove('offscreen');
             //elem.href = 'download.php?token=' + data.token;
+            var elem = document.getElementById('button_download_document');
             elem.dataset.token = data.token;
 
             setTimeout(() => {
@@ -56,6 +57,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+document.getElementById('button_shedule_meeting').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  let downloadbtn = document.getElementById('button_download_document');
+
+  let token = downloadbtn.dataset.token;
+  let purpose = downloadbtn.dataset.purpose;
+  let target = downloadbtn.dataset.target;
+
+  if (!token || !purpose || !target) {
+    const form = document.getElementById('form_verify_email');
+    form.requestSubmit();
+
+    console.log('No token, purpose, or target provided. Requesting email verification...');
+
+    setTimeout(() => {
+      token = downloadbtn.dataset.token;
+      purpose = downloadbtn.dataset.purpose;
+      target = downloadbtn.dataset.target;
+
+      if (!token || !purpose || !target) {
+        console.error('Error: Missing token, purpose, or target.');
+        document.getElementById('response').textContent = 'Please verify your email first!';
+        document.getElementById('response').classList.add('text-red-600');
+        return;
+      }
+
+      document.getElementById('button_shedule_meeting').click();
+    }, 1500);
+
+    return;
+  }
+
+  window.open('https://calendly.com/bernardlawes/30min', '_blank');
+});
+
 //
 // Download button click event handler - Checks if the download is allowed before proceeding
 // It uses the Fetch API to send the form data to the server and handle the response
@@ -63,48 +101,69 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById('button_download_document').addEventListener('click', function (e) {
   e.preventDefault();
 
-  const token = this.dataset.token;
-  const purpose = this.dataset.purpose;
-  const target = this.dataset.target;
+  var token = this.dataset.token;
+  var purpose = this.dataset.purpose;
+  var target = this.dataset.target;
 
-  const previewUrl = `download.php?token=${encodeURIComponent(token)}&purpose=${encodeURIComponent(purpose)}&target=${encodeURIComponent(target)}&preview=1`;
+  if (!token || !purpose || !target) {
 
-  fetch(previewUrl)
+    
+    const form = document.getElementById('form_verify_email');
+    form.requestSubmit();
+    
+    console.log('No token, purpose, or target provided. Requesting email verification...');
+
+    setTimeout(() => {
+      token = this.dataset.token;
+      purpose = this.dataset.purpose;
+      target = this.dataset.target;
+      if (!token || !purpose || !target) {
+        //document.getElementById('response').textContent = 'Error: Missing token, purpose, or target.';
+        console.error('Error: Missing token, purpose, or target.');
+        document.getElementById('response').textContent = 'Please verify your email first!';
+        document.getElementById('response').classList.add('text-red-600');
+        return;
+      }
+      document.getElementById('button_download_document').click();
+    }, 1500);
+
+    return;
+
+  }
+
+  console.log(`Token: ${token}, Purpose: ${purpose}, Target: ${target}`);
+
+
+  const url = `download.php?token=${encodeURIComponent(token)}&purpose=${encodeURIComponent(purpose)}&target=${encodeURIComponent(target)}`;
+
+  fetch(url)
     .then(response => {
       if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
+        // The response has a non-200 status (e.g., 403)
+        return response.text().then(text => {
+          throw new Error(text); // Pass PHP message to .catch()
+        });
       }
-      return response.text();
+      return response.blob();
     })
-    .then(text => {
-
-      document.getElementById('response').innerHTML = "<span>File Downloaded!</span>";
-      document.getElementById('response').classList.add('text-green-600');
-
-      // Trigger download if the preview check passed
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = `download.php?token=${encodeURIComponent(token)}&purpose=${encodeURIComponent(purpose)}&target=${encodeURIComponent(target)}`;
-      document.body.appendChild(iframe);
+    .then(blob => {
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = target;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
     })
     .catch(error => {
-      document.getElementById('response').classList.add('text-red-600');
-      document.getElementById('response').textContent = error.message;
-      if (error.message.includes('403')) {
-        document.getElementById('response').textContent = 'Permission Denied. Expired Token.';
-      }
-      else if (error.message.includes('404')) {
-        document.getElementById('response').textContent = 'File not found.';
-      }
-      else if (error.message.includes('500')) {
-        document.getElementById('response').textContent = 'Server error. Please try again later.';
-      }
-      else {
-        document.getElementById('response').textContent = 'An unexpected error occurred.';
-      }
-
-      
+      document.getElementById('response').textContent = 'Error downloading file.';
+      console.error('Download error:', error);
+      console.log(error.message);
+      // Optionally, you can show an error message to the user  
     });
+
+
 });
 
 

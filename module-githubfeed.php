@@ -9,7 +9,7 @@ if (!file_exists($configPath)) {
 $config = json_decode(file_get_contents($configPath), true);
 $username = $config['github_username'] ?? null;
 $token = $config['github_token'] ?? null;
-$repolimit = 11;
+$repolimit = 13;
 
 if (!$username) {
     die("Username missing in config.json.");

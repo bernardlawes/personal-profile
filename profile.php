@@ -159,65 +159,108 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
     <div class="bg-white dark:bg-gray-900 p-8 rounded-lg shadow flex flex-col justify-between text-center">
       <h3 class="text-2xl  mb-4"><?php echo $payload['download']['title'][$pagelanguage ]; ?></h3>
       <p class="mb-6 text-gray-600 dark:text-gray-300"><?php echo $payload['download']['text'][$pagelanguage ]; ?> </p>
-      <button id="themeToggle" class="bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-full transition offscreen">
-        Request
-      </button>
-      <div >
-      <form id="form_verify_email" 
-              class="flex flex-col sm:flex-row sm:items-center sm:space-x-2 space-y-2 sm:space-y-0 bg-white p-4 rounded-lg" 
-              style="background-color: transparent;">
+      <div class="text-sm text-center offscree" style="margin-bottom:20px; margin-top:-10px; text-transform:capitalize; font-size:15px;"  id="response">&nbsp;</div>
+  
+      
+        <form id="form_verify_email" 
+              class="flex flex-col sm:flex-row sm:items-center sm:space-x-2 space-y-2 sm:space-y-0 bg-white p-4 rounded-lg " 
+              style="background-color: transparent; margin-top:-30px; margin-bottom: 20px;">
           
           <input type="hidden" name="purpose" id="input_purpose" value="downloads" />
           <input type="hidden" name="target" id="input_target" value="resume.pdf" />
 
           <input name="email" id="input_verify_email" required
             type="text"
-            placeholder="Enter your email address"
-            class="px-6 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            placeholder="Enter your Email Address"
+            class="flex-1 text-center peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-md text-gray-900 dark:text-white dark:border-gray-600 focus:border-blue-600 focus:outline-none focus:ring-0"
           />
-
+          <!--
           <button id="button_verify_email" type="submit"
-            class="px-6 py-3 bg-blue-500 hover:bg-blue-300 text-white rounded-md transition w-full sm:w-auto">
-            Request
+            class="px-4 py-2 bg-red-950 hover:bg-red-900 text-white rounded-md transition w-full sm:w-auto">
+            <span class="text-[20px] font-light">Verify</span>
           </button>
-          <a href = '#'
-            id="button_download_document" 
-            type="button"
-            class="animated-button px-6 py-3 bg-blue-500 hover:bg-blue-300 text-white rounded-md transition w-full offscreen" 
-            
-            data-token=""
-            data-purpose="some purpose"
-            data-target="example.txt"
-          >
-            <span style="font-weight: 100"></span> <span style="font-weight: 100">Click to Download</span>
-          </a>
+          -->
         </form>
-        <div class="text-sm text-center" style="margin-bottom:-20px; text-transform:capitalize"  id="response">&nbsp;</div>
-      </div>
+        
+      
+
+         <div id ="div_download_approved" class="cta-button-container flex gap-5 flex-wrap md:flex-nowrap offscree">
+            <a href="#"
+              id="button_download_document" 
+              type="button"
+              class="animated-butto flex-1  px-6 py-3 rounded-md transition"  
+
+              data-token=""
+              data-purpose="some purpose"
+              data-target="downloads"
+            >
+              <span style="font-weight: 300;  font-size: 20px;"><?php echo $payload['cta-0']['title'][$pagelanguage ]; ?></span>
+            </a>
+            
+            <a href = '#'
+              target = "_blank"
+              id="button_shedule_meeting" 
+              type="button"
+              class="animated-butto flex-1  px-6 py-3 rounded-md transition" 
+              data-token=""
+              data-purpose="some purpose"
+              data-target="example.txt"
+            >
+              <span style="font-weight: 300;   font-size: 20px;"><?php echo $payload['cta-1']['title'][$pagelanguage ]; ?></span>
+            </a>
+            <!--
+            <a href = '#'
+              id="button_download_document" 
+              type="button"
+              class="animated-butto flex-1  px-6 py-3 bg-blue-950 hover:bg-blue-900 text-white rounded-md transition" 
+              data-token=""
+              data-purpose="some purpose"
+              data-target="example.txt"
+            >
+              <span style=""></span> <span style="font-weight: 300;   font-size: 20px;">Calendar</span>
+            </a>
+            -->
+        </div>
+      
       
     </div>
 
     <!-- Right Container -->
     <div class="bg-white dark:bg-gray-900 p-8 rounded-lg shadow flex flex-col justify-between text-center">
-      <h3 class="text-2xl  mb-4"><?php echo $payload['language']['title'][$pagelanguage ]; ?></h3>
-      <p class="mb-6 text-gray-600 dark:text-gray-300"><?php echo $payload['language']['text'][$pagelanguage ]; ?>。</p>
-      <!--
-      <button class="bg-green-600 hover:bg-green-500 text-white py-3 px-6 rounded-full transition">
-        日本語へ
-      </button>
-      -->
-      <div >
-        <form class="flex items-center space-x-2 bg-white p-4 rounded-lg " style="background-color:transparent;">
+        <h3 class="text-2xl  mb-4"><?php echo $payload['language']['title'][$pagelanguage ]; ?></h3>
+        <p class="mb-6 text-gray-600 dark:text-gray-300"><?php echo $payload['language']['text'][$pagelanguage ]; ?>。</p>
+        <div class="text-sm text-center" style="margin-bottom:0px; text-transform:capitalize; font-size:15px;"  id="response">&nbsp;</div>         
+        
+        <div class="cta-button-container">
           <button
             type="button"
-            class="px-6 py-3 bg-red-500 hover:bg-blue-300 text-white rounded-md transition w-full" onclick="window.location.href='<?php echo ($pagelanguage == 'en') ? 'profile.php?lang=jp' : 'profile.php'; ?>'"
-          >
-            <?php echo ($pagelanguage == 'en') ? '日本語へ' : 'English'; ?>
+            class="flag-button w-full h-12 pl-14 pr-4 py-2 bg-blue-600 text-white rounded-md relative overflow-hidden" onclick="window.location.href='<?php echo ($pagelanguage == 'en') ? 'profile.php?lang=jp' : 'profile.php'; ?>'"
+            style="background-image: url('<?php echo ($pagelanguage == 'en') ? 'images/jp.png' : 'images/us.png'; ?>');"
+            >
+                <span style="font-weight: 300;   font-size: 20px;"><?php echo ($pagelanguage == 'en') ? '日本語へ' : 'English'; ?></span>
           </button>
-        </form>
+        </div>
+      
+      </div>  
+    
+    
+    
+    
+    <!--
+    <div class="bg-white dark:bg-gray-900 p-8 rounded-lg shadow flex flex-col justify-between text-center">
+      <h3 class="text-2xl  mb-4"><?php echo $payload['language']['title'][$pagelanguage ]; ?></h3>
+      <p class="mb-6 text-gray-600 dark:text-gray-300"><?php echo $payload['language']['text'][$pagelanguage ]; ?>。</p>
+      <div class="cta-button-container">
+        <button
+          type="button"
+          class="px-6 py-3 rounded-md transition w-full" onclick="window.location.href='<?php echo ($pagelanguage == 'en') ? 'profile.php?lang=jp' : 'profile.php'; ?>'"
+        >
+              <img src="<?php echo ($pagelanguage == 'en') ? 'images/jp.png' : 'images/us.png'; ?>" alt="Japan Flag" class="w-5 h-5 inline-block align-middle"> &nbsp;
+              <span style="font-weight: 300;   font-size: 20px;"><?php echo ($pagelanguage == 'en') ? '日本語へ' : 'English'; ?></span>
+        </button>
       </div>
     </div>
-
+  -->
   </div>
 </section>
 
@@ -410,10 +453,10 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
           alt="GitHub Activity Graph"
           class="w-full rounded"
         />
-      </div>
-      <br/>
-      <!-- Top Languages Card -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition">
+</div>
+<br/>
+<!-- Top Languages Card -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition">
         
         <img 
           src="https://github-readme-stats.vercel.app/api/top-langs/?username=bernardlawes&layout=compact&theme=tokyonight" 
@@ -421,8 +464,18 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
           class="w-full rounded"
         />
         
-      </div>
-    
+</div>
+<br/>
+<!-- Top Languages Card -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition">
+        
+        
+<button id="" style="font-size:23px; font-weight:100" class="bg-gray-800 hover:bg-blue-500 text-white py-3 px-6 w-full transition">
+        See more on GitHub
+      </button>
+
+        
+</div>
   </div>
 
   <div id="githubFeed" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
