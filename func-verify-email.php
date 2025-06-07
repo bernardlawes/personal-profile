@@ -6,7 +6,7 @@ header('Content-Type: application/json; charset=utf-8');
 // Validated if just checked for format and domain
 // Approved if Gmail/Yahoo and bypassed
 
-$bypass_verification = true; // Set to true to skip verification for testing purposes
+$bypass_verification = true; // Set to fasle to skip verification for testing purposes
 $bypass_gmail_yahoo = false; // Set to true to skip Gmail/Yahoo check for testing purposes
 
 if (!$bypass_verification){

@@ -78,14 +78,7 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-  
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300 ">
-
-
-
-
-
-
 
 <!-- Hero -->
 <section class="relative bg-gray-900 text-white py-24 px-6 text-center bg-cover bg-center" style="background-image: url('images/map.jpg');">
@@ -188,8 +181,8 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
             <a href="#"
               id="button_download_document" 
               type="button"
-              class="animated-butto flex-1  px-6 py-3 rounded-md transition"  
-
+              class="animated-butto flag-button flex-1  px-6 py-3 rounded-md transition"  
+              style="background-image: url('assets/img/pdf1.png'); background-size: 24px 24px;"
               data-token=""
               data-purpose="some purpose"
               data-target="downloads"
@@ -201,25 +194,14 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
               target = "_blank"
               id="button_shedule_meeting" 
               type="button"
-              class="animated-butto flex-1  px-6 py-3 rounded-md transition" 
+              class="animated-butto flag-button flex-1  px-6 py-3 rounded-md transition" 
+              style="background-image: url('assets/img/calendar1.png'); background-size: 32px 32px;"
               data-token=""
               data-purpose="some purpose"
               data-target="example.txt"
             >
               <span style="font-weight: 300;   font-size: 20px;"><?php echo $payload['cta-1']['title'][$pagelanguage ]; ?></span>
             </a>
-            <!--
-            <a href = '#'
-              id="button_download_document" 
-              type="button"
-              class="animated-butto flex-1  px-6 py-3 bg-blue-950 hover:bg-blue-900 text-white rounded-md transition" 
-              data-token=""
-              data-purpose="some purpose"
-              data-target="example.txt"
-            >
-              <span style=""></span> <span style="font-weight: 300;   font-size: 20px;">Calendar</span>
-            </a>
-            -->
         </div>
       
       
@@ -228,16 +210,16 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
     <!-- Right Container -->
     <div class="bg-white dark:bg-gray-900 p-8 rounded-lg shadow flex flex-col justify-between text-center">
         <h3 class="text-2xl  mb-4"><?php echo $payload['language']['title'][$pagelanguage ]; ?></h3>
-        <p class="mb-6 text-gray-600 dark:text-gray-300"><?php echo $payload['language']['text'][$pagelanguage ]; ?>。</p>
+        <p class="mb-6 text-gray-600 dark:text-gray-300"><?php echo $payload['language']['text'][$pagelanguage ]; ?></p>
         <div class="text-sm text-center" style="margin-bottom:0px; text-transform:capitalize; font-size:15px;"  id="response">&nbsp;</div>         
         
         <div class="cta-button-container">
           <button
             type="button"
-            class="flag-button w-full h-12 pl-14 pr-4 py-2 bg-blue-600 text-white rounded-md relative overflow-hidden" onclick="window.location.href='<?php echo ($pagelanguage == 'en') ? 'profile.php?lang=jp' : 'profile.php'; ?>'"
+            class="flag-button lative overflow-hidden w-full h-12 pl-14 pr-4 py-2 text-white  rounded-md re" onclick="window.location.href='<?php echo ($pagelanguage == 'en') ? 'profile.php?lang=jp' : 'profile.php'; ?>'"
             style="background-image: url('<?php echo ($pagelanguage == 'en') ? 'images/jp.png' : 'images/us.png'; ?>');"
             >
-                <span style="font-weight: 300;   font-size: 20px;"><?php echo ($pagelanguage == 'en') ? '日本語へ' : 'English'; ?></span>
+                <span style="font-weight: 300;   font-size: 20px;"><?php echo ($pagelanguage == 'en') ? '日本語版を見る' : 'Go to English'; ?></span>
           </button>
         </div>
       
@@ -570,9 +552,9 @@ $tagcolors = ['blue', 'red', 'green', 'yellow', 'purple'];
             <?php echo $payload['contact']['form']['message'][$pagelanguage ]; ?></label>
         </div>
       
-        <div class="text-center pt-4">
+        <div class="text-center pt-4 cta">
           <button type="submit"
-            class="bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-full font-medium shadow transition">
+            class="bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-full font-medium shadow transition" style="background-color: #2c3e50">
             Send Message
           </button>
         </div>

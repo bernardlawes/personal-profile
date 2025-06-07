@@ -43,9 +43,8 @@ $payload = [
     ],
     'cta-0' => [
         'title'=> [
-            'en' => "<i class='fa fa-file-pdf aria-hidden='true'></i>  &nbsp;Download",
-            'jp' => "ダウンロード",
-        ],
+            'en' => "Download",
+            'jp' => "履歴書取得",],
         'text' => [
             'en' => "",
             'jp' => "",
@@ -53,8 +52,8 @@ $payload = [
     ],
     'cta-1' => [
         'title'=> [
-            'en' => "<i class='fa fa-calendar' aria-hidden='true'></i>  &nbsp;Calendar",
-            'jp' => "カレンダー",
+            'en' => "Schedule",
+            'jp' => "通話の予約",
         ],
         'text' => [
             'en' => "",
@@ -67,8 +66,8 @@ $payload = [
             'jp' => "English Profile",
         ],
         'text' => [
-            'en' => "こちらをクリックして、日本語のプロフィールをご覧ください。",
-            'jp' => "Click to view my English Profile",
+            'en' => "日本語版のプロフィールをお探しですか？<br/>下のボタンをクリックすると、日本語ページに移動できます",
+            'jp' => "Did you wander into here by mistake? <br/>No worries — tap the button below to return to English!",
         ]
     ],
     'skills' => [
